@@ -19,10 +19,10 @@ public class MainProgram {
             FileReaderService readerService = new FileReaderService();
             readerService.FileReaderMethod(fileName);
         } else if ( choose.equals("2") ) {
-            FileWriterService fileWriterService = new FileWriterService();
+            FileWriterService writerService = new FileWriterService();
             System.out.println("Enter your text: ");
             String myText = scanner.nextLine() + "\r\n";
-            FileWriterService.fileWriterMethod(fileName, myText);
+            writerService.fileWriterMethod(fileName,myText);
         } else {
             System.out.println("wrong inputs");
         }

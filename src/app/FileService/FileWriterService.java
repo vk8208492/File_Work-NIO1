@@ -2,6 +2,7 @@ package app.FileService;
 
 import app.utils.Constants;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,21 +11,21 @@ import java.nio.channels.FileChannel;
 
 public class FileWriterService {
 
-    static String content;
-    static String filePath;
+    private String filePath;
 
-    public static void fileWriterMethod(String content, String filePath) throws IOException {
-        content = "The capital of France is Paris.\n" +
-                "The capital of the Great Britain is London.";
-        filePath = Constants.BASE_PATH_IN + "Information";
-        getOutPut(writeToFile(content, filePath));
+    private File file;
+    public void fileWriterMethod(String fileName, String myText) throws IOException {
+
+        filePath = Constants.BASE_PATH + fileName ;
+        file = new File(filePath);
+        getOutPut(writeToFile(myText));
     }
 
-    public static String writeToFile(String content, String filePath) throws IOException {
+    public String writeToFile(String content) throws IOException {
 
         FileChannel writer;
 
-        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file,true)) {
             byte[] contentBytes = content.getBytes();
             ByteBuffer buffer = ByteBuffer.allocate(contentBytes.length);
             buffer.put(contentBytes);
@@ -38,7 +39,7 @@ public class FileWriterService {
         return "The content has been written.";
     }
 
-    public static void getOutPut(String outPut) {
+    public void getOutPut(String outPut) {
         System.out.println(outPut);
     }
 }

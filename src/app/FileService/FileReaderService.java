@@ -2,6 +2,7 @@ package app.FileService;
 
 import app.utils.Constants;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,19 +12,22 @@ import java.nio.charset.Charset;
 
 public class FileReaderService {
 
-    private static final String BASE_PATH = "files/";
+    private String filePath;
+    private File file;
 
-    public void FileReaderMethod(String filePath) throws IOException{
-        filePath = BASE_PATH + "Information";
-        getOutPut(readFile(filePath));
+
+    public void FileReaderMethod(String fileName) throws IOException{
+        filePath = Constants.BASE_PATH + fileName ;
+        file = new File(filePath);
+        getOutPut(readFile());
     }
 
-    public static String readFile(String filePath) throws IOException  {
+    public String readFile() throws IOException {
 
         FileChannel reader;
         StringBuilder builder;
 
-        try (FileInputStream fileInputStream = new FileInputStream(filePath)) {
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
             reader = fileInputStream.getChannel();
             ByteBuffer buffer = ByteBuffer.allocate(360);
             builder = new StringBuilder();
@@ -38,7 +42,7 @@ public class FileReaderService {
         reader.close();
         return builder.toString();
     }
-    public static void getOutPut(String outPut){
+    public void getOutPut(String outPut){
         System.out.println(outPut);
     }
 }
